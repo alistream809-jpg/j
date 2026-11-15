@@ -1,0 +1,10 @@
+{
+  "key.categories.chestesp": "ChestESP",
+  "key.chestesp.menu": "Open ChestESP Settings",
+  "key.chestesp.toggle": "Toggle ChestESP",
+  "key.chestesp.toggle.chest": "Toggle Chests",
+  "key.chestesp.toggle.trapped": "Toggle Trapped Chests",
+  "key.chestesp.toggle.ender": "Toggle Ender Chests",
+  "key.chestesp.toggle.barrel": "Toggle Barrels",
+  "key.chestesp.toggle.shulker": "Toggle Shulker Boxes"
+}

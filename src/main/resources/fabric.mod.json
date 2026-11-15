@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "chestesp",
+  "version": "${version}",
+  "name": "ChestESP",
+  "description": "Highlights chests, barrels, ender chests and shulker boxes through walls. Fully configurable GUI.",
+  "authors": ["ChestESP"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.chestesp.ChestESPClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
