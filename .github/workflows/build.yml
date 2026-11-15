@@ -1,0 +1,54 @@
+name: Build ChestESP
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.10.2
+
+      - name: Compile
+        run: gradle compileJava --no-daemon --stacktrace
+
+      - name: Run tests
+        run: gradle test --no-daemon --stacktrace
+
+      - name: Build JAR
+        run: gradle build --no-daemon --stacktrace
+
+      - name: Package source + compiled JAR into ZIP
+        run: |
+          VERSION=$(grep '^mod_version' gradle.properties | cut -d= -f2)
+          rm -rf dist && mkdir -p dist/ChestESP/compiled dist/ChestESP/source
+          rsync -a --exclude='.git' --exclude='.gradle' --exclude='build' --exclude='dist' --exclude='run' ./ dist/ChestESP/source/
+          cp build/libs/*.jar dist/ChestESP/compiled/
+          cp README.md dist/ChestESP/README.md
+          (cd dist && zip -r "../ChestESP-${VERSION}-project.zip" ChestESP)
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChestESP-project
+          path: ChestESP-*-project.zip
+
+      - name: Upload plain JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChestESP-jar
+          path: build/libs/chestesp-*.jar
